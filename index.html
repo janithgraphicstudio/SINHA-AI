@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINHA AI - Your Multilingual AI Assistant</title>
+    <link rel="stylesheet" href="styles.css"> <!-- CSS file link -->
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SINHA AI</h1>
+            <p>Your Multilingual AI Assistant</p>
+        </div>
+        
+        <div class="main">
+            <div class="sidebar">
+                <h2>Language Selection</h2>
+                <div class="language-selector">
+                    <button class="language-btn" data-language="sinhala">සිංහල</button>
+                    <button class="language-btn" data-language="english">English</button>
+                    <button class="language-btn active" data-language="tamil">தமிழ்</button>
+                </div>
+                
+                <div class="api-key-container">
+                    <h3>API Configuration</h3>
+                    <p>API key is already set and ready to use.</p>
+                </div>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">
+                        Hello! I'm SINHA AI, your multilingual assistant. Choose a language and ask me anything.
+                    </div>
+                </div>
+                
+                <div class="loader" id="loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Ask me anything...">
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script> <!-- JavaScript file link -->
+</body>
+</html>
