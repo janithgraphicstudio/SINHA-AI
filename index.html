@@ -3,54 +3,1199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SINHA AI - Your Multilingual AI Assistant</title>
-    <link rel="stylesheet" href="styles.css"> <!-- CSS file link -->
+    <title>SINHA AI - Advanced AI Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #ff3366;
+            --secondary-color: #ff7b25;
+            --dark-bg: rgba(15, 15, 20, 0.85);
+            --blur-bg: rgba(25, 25, 35, 0.65);
+            --text-color: #f0f0f0;
+            --accent-color: #00ffaa;
+            --card-color-primary: #05184d;
+            --card-color-secondary: #230736;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f0f14;
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('bai.gif') no-repeat center center/cover;
+            filter: brightness(0.4);
+            z-index: -2;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 51, 102, 0.1) 0%,
+                rgba(255, 123, 37, 0.1) 20%,
+                rgba(0, 255, 170, 0.1) 40%,
+                rgba(102, 51, 255, 0.1) 60%,
+                rgba(255, 51, 102, 0.1) 80%,
+                rgba(255, 123, 37, 0.1) 100%
+            );
+            animation: gradientMove 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientMove {
+            0% { transform: chatbot(0deg); }
+            100% { transform: gradient(360deg); }
+        }
+
+        /* Welcome Popup */
+        .welcome-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .welcome-popup.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            background: var(--dark-bg);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            overflow: hidden;
+            animation: cardEntrance 0.8s ease-out;
+        }
+
+        @keyframes cardEntrance {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                transparent 20%,
+                var(--card-color-primary) 40%,
+                var(--card-color-secondary) 60%,
+                transparent 80%,
+                transparent 100%
+            );
+            animation: borderGlow 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes borderGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px rgba(255, 51, 102, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 123, 37, 0.8); }
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgba(240, 240, 240, 0.8);
+        }
+
+        .welcome-description {
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            color: rgba(240, 240, 240, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Loading Animation */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-container.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .logo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .logo-title:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Buttons */
+        .btn {
+            position: relative;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.6);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            background: var(--blur-bg);
+            color: var(--text-color);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-animate {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-registered {
+            background: rgba(0, 255, 170, 0.1);
+            color: #00ffaa;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            pointer-events: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(240, 240, 240, 0.8);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        /* AI Tools Section */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .tool-card {
+            background: var(--blur-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 51, 102, 0.1) 0%,
+                rgba(255, 123, 37, 0.1) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .tool-content {
+            padding: 20px;
+        }
+
+        .tool-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .tool-description {
+            font-size: 0.9rem;
+            color: rgba(240, 240, 240, 0.7);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .tool-button {
+            width: 100%;
+        }
+
+        .more-tools {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        /* Message Section */
+        .message-section {
+            margin-bottom: 80px;
+        }
+
+        .message-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .message-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--blur-bg);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(240, 240, 240, 0.8);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-checkbox input {
+            margin-right: 10px;
+        }
+
+        .form-submit {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Verification Popup */
+        .verification-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .verification-popup.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .verification-card {
+            background: var(--dark-bg);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .verification-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                transparent 20%,
+                var(--primary-color) 40%,
+                var(--secondary-color) 60%,
+                transparent 80%,
+                transparent 100%
+            );
+            animation: borderGlow 4s linear infinite;
+            z-index: -1;
+        }
+
+        .verification-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .verification-description {
+            font-size: 0.9rem;
+            color: rgba(240, 240, 240, 0.7);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .verification-code {
+            font-family: monospace;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 15px auto;
+            display: inline-block;
+            color: var(--accent-color);
+        }
+
+        .verification-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            letter-spacing: 2px;
+            font-family: monospace;
+        }
+
+        .verification-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .verification-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .verification-buttons .btn {
+            flex: 1;
+        }
+
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Scroll To Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--blur-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scroll-to-top.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .scroll-to-top i {
+            font-size: 1.2rem;
+            color: white;
+        }
+          /* About Section */
+        .about-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-img img {
+            width: 75%;
+            border-radius: 15px;
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            color: var(--text);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .partners {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .partner-logo {
+            height: 50px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: rgba(240, 240, 240, 0.6);
+        }
+          .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .header-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 30px 20px;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>SINHA AI</h1>
-            <p>Your Multilingual AI Assistant</p>
-        </div>
-        
-        <div class="main">
-            <div class="sidebar">
-                <h2>Language Selection</h2>
-                <div class="language-selector">
-                    <button class="language-btn" data-language="sinhala">සිංහල</button>
-                    <button class="language-btn" data-language="english">English</button>
-                    <button class="language-btn active" data-language="tamil">தமிழ்</button>
-                </div>
-                
-                <div class="api-key-container">
-                    <h3>SINHA Ai 2025 v1</h3>
-                    <p>JGS LANKA Co.</p>
-                    <p>JGS LANKA EDUCATION PLATFORM</p>
-                    <p>JANITH ATHMA HERATH | 070 200 1859</p>
-                </div>
-            </div>
-            
-            <div class="chat-container">
-                <div class="chat-messages" id="chat-messages">
-                    <div class="message bot-message">
-                        Hello! I'm SINHA AI, your multilingual assistant. Choose a language and ask me anything.
-                    </div>
-                </div>
-                
-                <div class="loader" id="loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                
-                <div class="chat-input">
-                    <input type="text" id="user-input" placeholder="Ask me anything...">
-                    <button id="send-btn">Send</button>
-                </div>
-            </div>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+
+    <!-- Welcome Popup -->
+    <div class="welcome-popup" id="welcomePopup">
+        <div class="welcome-card">
+            <h1 class="welcome-title">Welcome</h1>
+            <p class="welcome-subtitle" id="typingSubtitle"></p>
+            <p class="welcome-description">Experience the power of advanced AI with SINHA AI. Our platform offers cutting-edge tools and chatbot assistance to enhance your productivity and creativity.</p>
+            <button class="btn btn-primary btn-animate" id="welcomeButton">Try SINHA AI</button>
         </div>
     </div>
-    
-    <script src="script.js"></script> <!-- JavaScript file link -->
+
+    <!-- Loading Animation -->
+    <div class="loading-container" id="loadingContainer">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Verification Popup -->
+    <div class="verification-popup" id="verificationPopup">
+        <div class="verification-card">
+            <h3 class="verification-title">Enter Your Verification Code</h3>
+            <p class="verification-description">Please enter the code below to verify your account:</p>
+            <div class="verification-code">5XXXJGS</div>
+            <input type="text" class="verification-input" id="verificationInput" placeholder="Enter code here">
+            <div class="verification-buttons">
+                <button class="btn btn-secondary" id="cancelVerification">Cancel</button>
+                <button class="btn btn-primary" id="verifyButton">Verify</button>
+            </div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfAfC4Skz6wSDzHU6UbT0PG7xKhd92pYKnKhioKGOnxCNpEGA/viewform" class="register-link" target="_blank">Register Now</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContainer">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="SINHA AI Logo" class="logo">
+                <h1 class="logo-title">SINHA AI</h1>
+            </div>
+            <div class="header-buttons">
+                </a>
+                <a href="https://sites.google.com/view/sinha-ai/api" class="btn btn-secondary" style="margin-left: 15px;" target="_blank">
+                    <i class="fas fa-code"></i> API AND CODES
+                </a>
+                <button class="btn btn-secondary" id="signupButton">Sign Up</button>
+                <button class="btn btn-secondary" id="registeredButton" style="display: none;">
+                    <i class="fas fa-check-circle"></i> Registered
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">AI Powered Platform 2025</h1>
+                <p class="hero-description">SINHA AI provides state-of-the-art artificial intelligence tools to help you with coding, content creation, image generation, and more. Experience the future of AI-powered productivity.</p>
+                <div class="hero-buttons">
+                    <a href="https://sites.google.com/view/sinha-ai/sinha-ai-vr1-2025" class="btn btn-primary btn-animate" target="_blank">
+                        <i class="fas fa-robot"></i> Chat With Sinha AI VR2
+                    </a>
+                    <a href="#aiTools" class="btn btn-secondary">
+                        <i class="fas fa-magic"></i> Try AI Powered Tools
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Tools Section -->
+        <section class="ai-tools" id="aiTools">
+            <h2 class="section-title">AI Tools</h2>
+            <div class="tools-grid">
+                <!-- AI Chat Bot Assistant -->
+                <div class="tool-card">
+                    <img src="1.jpg" alt="AI Chat Bot Assistant" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">AI Chat Bot Assistant</h3>
+                        <p class="tool-description">Our advanced chatbot can answer your questions, provide recommendations, and assist with various tasks using natural language processing.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/sinha-ai-vr1-2025" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                <!-- AI Code Generator -->
+                <div class="tool-card">
+                    <img src="2.jpg" alt="AI Code Generator" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">AI Code Generator Code Gen 6</h3>
+                        <p class="tool-description">Generate code snippets, debug existing code, or get programming help in multiple languages with our AI-powered code assistant.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/sinha-ai-vr1-2025/sinha-ai-code-gen-6-pro" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                <!-- AI Image Generator -->
+                <div class="tool-card">
+                    <img src="3.jpg" alt="AI Image Generator" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">AI Image Generator VR 1.0 25</h3>
+                        <p class="tool-description">Create stunning images from text descriptions using our advanced AI image generation technology.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/sinha-ai-vr1-2025/sinha-image-generator-ai-r1-25" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                <!-- JGS Live Code Editor -->
+                <div class="tool-card">
+                    <img src="4.PNG" alt="JGS Live Code Editor" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">JGS Live Code Editor with AI</h3>
+                        <p class="tool-description">A powerful online code editor with real-time collaboration, syntax highlighting, and AI-assisted coding features.</p>
+                        <a href="https://sites.google.com/view/jgssoftware/jgs-live-code-editor" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="more-tools">
+                <a href="https://sites.google.com/view/sinha-ai/ai-tools" class="btn btn-primary" id="moreToolsButton" target="_blank">
+                    <i class="fas fa-plus"></i> Get More AI Tools
+                </a>
+                <a href="https://sites.google.com/view/sinha-ai/api" class="btn btn-secondary" style="margin-left: 15px;" target="_blank">
+                    <i class="fas fa-code"></i> GET API AND CODES STORE
+                </a>
+            </div>
+        </section>
+
+        <!-- Message Section -->
+        <section class="message-section">
+            <h2 class="message-title" id="typingMessageTitle"></h2>
+            <div class="message-form-container">
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" id="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea id="message" class="form-input form-textarea" required></textarea>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="agree" required>
+                        <label for="agree">I agree to share my information</label>
+                    </div>
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+          <!-- About Us Section -->
+    <section id="about">
+        <div class="section-title slide-up">
+            <h2>ABOUT US</h2>
+            <p>Learn more about our mission and the team behind SINHA AI</p>
+        </div>
+        <div class="about-container">
+            <div class="about-img slide-up">
+                <img src="Logo.png" alt="About Us">
+            </div>
+            <div class="about-content slide-up">
+                <h2>Our Story</h2>
+                <p>SINHA AI was founded in 2025 with the vision of making advanced artificial intelligence accessible to everyone. Our team of experts in machine learning, data science, and software engineering work tirelessly to create innovative solutions that solve real-world problems.</p>
+                <p>H. M. JANITHA ATHMA HERATH ( CEO )
+                    JANITH GRAPHIC STUDIO
+                    
+                    As one of the best graphic design agencies in Sri Lanka, which has won the trust of customers for six years, we are committed to providing friendly customer service as well as efficient, quality service for you, the customer.
+                    
+                    
+                    The service you need is highly ranked in our website and you can contact us on the online contacts information.  
+                    
+                    Also, our friendly customer service department is ready to provide free solutions to your computer and technical problems.
+                    
+                    
+                    More information about our purpose and services through the website below</p>
+                
+                
+                <div class="footer-logo">JGS LANKA EDUCATION 2025| Sri Lanka</div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+        <footer>
+             <div class="footer-links">
+            <a href="https://www.google.com/url?q=https%3A%2F%2Fweb.facebook.com%2Fjanithgraphicstudio.eblog&sa=D&sntz=1&usg=AOvVaw3p3jjzL04dtbyD7MfVzmzU"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.google.com/url?q=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjanitha-athma-herath-a7a3ba271%2F&sa=D&sntz=1&usg=AOvVaw2DD1U0Jya9ZOQS0xgFF-Mc"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/channel/UCihEwYPV1pACRyi0fJlboRQ"><i class="fab fa-youtube"></i></a>
+        </div>
+            <p>&copy; © 2025 SINHA AI. All Rights Reserved.</p>
+             <p>&copy; Desing By : JGS LANKA CO. | H. M. Janith Athma Herath | 070 200 1859</p>
+        </footer>
+    </div>
+
+    <!-- Scroll To Top Button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Welcome Popup Typing Effect
+        const typingSubtitle = document.getElementById('typingSubtitle');
+        const welcomeText = "Try The Latest Features Powered by Artificial Intelligence";
+        let i = 0;
+
+        function typeWriter() {
+            if (i < welcomeText.length) {
+                typingSubtitle.innerHTML += welcomeText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // Message Section Typing Effect
+        const messageTitle = document.getElementById('typingMessageTitle');
+        const messageText = "Share your problems and suggestions with us";
+        let j = 0;
+
+        function typeMessage() {
+            if (j < messageText.length) {
+                messageTitle.innerHTML += messageText.charAt(j);
+                j++;
+                setTimeout(typeMessage, 50);
+            }
+        }
+
+        // Welcome Button Click Event
+        const welcomeButton = document.getElementById('welcomeButton');
+        const welcomePopup = document.getElementById('welcomePopup');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const mainContainer = document.getElementById('mainContainer');
+
+        welcomeButton.addEventListener('click', () => {
+            welcomePopup.classList.add('hidden');
+            loadingContainer.classList.add('active');
+            
+            setTimeout(() => {
+                loadingContainer.classList.remove('active');
+                mainContainer.classList.add('show');
+                
+                // Start typing effects after page loads
+                typeMessage();
+            }, 1500);
+        });
+
+        // Signup Button Click Event
+        const signupButton = document.getElementById('signupButton');
+        const registeredButton = document.getElementById('registeredButton');
+        const verificationPopup = document.getElementById('verificationPopup');
+        const cancelVerification = document.getElementById('cancelVerification');
+        const verifyButton = document.getElementById('verifyButton');
+        const verificationInput = document.getElementById('verificationInput');
+
+        // Check if user is already registered
+        if (localStorage.getItem('sinhaAIRegistered') === 'true') {
+            signupButton.style.display = 'none';
+            registeredButton.style.display = 'flex';
+        }
+
+        signupButton.addEventListener('click', () => {
+            verificationPopup.classList.add('active');
+        });
+
+        cancelVerification.addEventListener('click', () => {
+            verificationPopup.classList.remove('active');
+        });
+
+        verifyButton.addEventListener('click', () => {
+            if (verificationInput.value === 'UIM167658CM','UIM168558CM') {
+                localStorage.setItem('sinhaAIRegistered', 'true');
+                signupButton.style.display = 'none';
+                registeredButton.style.display = 'flex';
+                verificationPopup.classList.remove('active');
+                
+                // Show success animation
+                registeredButton.classList.add('btn-animate');
+                setTimeout(() => {
+                    registeredButton.classList.remove('btn-animate');
+                }, 2000);
+            } else {
+                alert('Invalid verification code. Please try again.');
+                verificationInput.value = '';
+            }
+        });
+
+        // More Tools Button Click Event
+        const moreToolsButton = document.getElementById('moreToolsButton');
+
+        moreToolsButton.addEventListener('click', (e) => {
+            if (localStorage.getItem('sinhaAIRegistered') !== 'true') {
+                e.preventDefault();
+                verificationPopup.classList.add('active');
+            }
+        });
+
+        // Message Form Submission
+        const messageForm = document.getElementById('messageForm');
+
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(`${name} says: ${message}`);
+            
+            // Open WhatsApp with the message
+            window.open(`https://wa.me/+94702001859?text=${encodedMessage}`, '_blank');
+            
+            // Reset form
+            messageForm.reset();
+            
+            // Show success animation
+            const submitButton = messageForm.querySelector('button');
+            submitButton.innerHTML = '<i class="fas fa-check"></i> Sent!';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Send';
+                submitButton.disabled = false;
+            }, 2000);
+        });
+
+        // Scroll To Top Button
+        const scrollToTop = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTop.classList.add('active');
+            } else {
+                scrollToTop.classList.remove('active');
+            }
+        });
+
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Start welcome typing effect
+        typeWriter();
+    </script>
 </body>
 </html>
