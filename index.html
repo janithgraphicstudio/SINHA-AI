@@ -610,8 +610,8 @@
                 45deg,
                 transparent 0%,
                 transparent 20%,
-                var(--primary-color) 40%,
-                var(--secondary-color) 60%,
+                var(--card-color-primary) 40%,
+                var(--card-color-secondary) 60%,
                 transparent 80%,
                 transparent 100%
             );
@@ -686,6 +686,46 @@
         .register-link:hover {
             color: white;
             text-decoration: underline;
+        }
+           /* AI Search Bar in Header */
+        .ai-search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1); /* Similar to form inputs */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px; /* Rounded corners */
+            padding: 20px 15px;
+            gap: 10px;
+            flex-grow: 1; /* Allow it to take available space */
+            max-width: 700px; /* Limit max width */
+            margin: 0 auto; /* Center it if it doesn't take full width */
+        }
+
+        .ai-icon {
+            color: white; /* Use accent color for icon */
+            font-size: 2rem;
+        }
+
+        .simulated-input {
+            flex-grow: 1; /* Allow text area to take space */
+            color: rgb(0, 110, 255);
+            font-size: 1.2rem;
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow during typing */
+            position: relative;
+            height: 1.2em; /* Give it a fixed height */
+        }
+
+        #aiTypingText {
+            display: inline-block;
+           /* Simulate typing effect */
+            /* You can adjust the duration and steps for different typing speeds */
+        }
+
+        .ai-search-bar .btn { /* Style the button within the bar */
+            padding: 8px 20px; /* Adjust padding */
+            font-size: 1rem; /* Adjust font size */
+            flex-shrink: 0; /* Prevent button from shrinking */
         }
 
         /* Scroll To Top Button */
@@ -856,6 +896,7 @@
     <!-- Welcome Popup -->
     <div class="welcome-popup" id="welcomePopup">
         <div class="welcome-card">
+            <img src="logo.png" alt="SINHA AI Logo" class="logo">
             <h1 class="welcome-title">Welcome</h1>
             <p class="welcome-subtitle" id="typingSubtitle"></p>
             <p class="welcome-description">Experience the power of advanced AI with SINHA AI. Our platform offers cutting-edge tools and chatbot assistance to enhance your productivity and creativity.</p>
@@ -871,9 +912,10 @@
     <!-- Verification Popup -->
     <div class="verification-popup" id="verificationPopup">
         <div class="verification-card">
+             <img src="verify.png" alt="SINHA AI Logo" class="logo">
             <h3 class="verification-title">Enter Your Verification Code</h3>
             <p class="verification-description">Please enter the code below to verify your account:</p>
-            <div class="verification-code">5XXXJGS</div>
+            <div class="verification-code">Eg: 5XXXJGS</div>
             <input type="text" class="verification-input" id="verificationInput" placeholder="Enter code here">
             <div class="verification-buttons">
                 <button class="btn btn-secondary" id="cancelVerification">Cancel</button>
@@ -916,6 +958,16 @@
                         <i class="fas fa-magic"></i> Try AI Powered Tools
                     </a>
                 </div>
+                  <!-- New AI Search Bar -->
+            <div class="ai-search-bar">
+                 <i class="fas fa-brain ai-icon"></i>  <!-- AI Model Icon -->
+                <div class="simulated-input">
+                    <span id="aiTypingText"></span> <!-- Typing text goes here -->
+                </div>
+                <a href="#aiTools" class="btn btn-primary" id="aiGetStartedButton">
+                   <i class="fa-solid fa-wand-magic-sparkles"></i> Get Started
+                </a>
+            </div>
             </div>
         </section>
 
@@ -960,6 +1012,46 @@
                         <h3 class="tool-name">JGS Live Code Editor with AI</h3>
                         <p class="tool-description">A powerful online code editor with real-time collaboration, syntax highlighting, and AI-assisted coding features.</p>
                         <a href="https://sites.google.com/view/jgssoftware/jgs-live-code-editor" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                 <!-- Data-Training-App -->
+                <div class="tool-card">
+                    <img src="vb.jpg" alt="JGS Live Code Editor" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">JGS AI Training Data Builder 25</h3>
+                        <p class="tool-description">Create and export training datasets for AI models, and AI-assisted coding features.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/jgs-ai-training-data-builder-25" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                 <!-- JGS Code Run Plus 2025 Update-->
+                <div class="tool-card">
+                    <img src="1.png" alt="JGS Live Code Editor" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">JGS Code Run Plus 2025 Update</h3>
+                        <p class="tool-description">Languages ​​supported include HTML, JAVA, JAVA SCRIPT, CCS, etc, - work with AI-powered features.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/jgs-code-run-plus-2025" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                 <!-- JGS Text Analyzer Pro+ 2025 Update-->
+                <div class="tool-card">
+                    <img src="6.png" alt="JGS Live Code Editor" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">JGS Text Analyzer Pro+ 2025 Update</h3>
+                        <p class="tool-description">This app allows you to find and analyze the number of lines, characters, clauses, words, summary, and important points in a paragraph or essay,</p>
+                        <a href="https://sites.google.com/view/sinha-ai/text-analyzer-pro-2025" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
+                 <!-- JGS Advanced Image Watermarking App Update-->
+                <div class="tool-card">
+                    <img src="7.png" alt="JGS Live Code Editor" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">JGS Image Watermarking App</h3>
+                        <p class="tool-description">This app allows you to add a watermark to a photo. A revolutionary tool that transforms the way you work with AI-powered features.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/jgs-advanced-image-watermarking-app" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
                     </div>
                 </div>
             </div>
@@ -1008,7 +1100,7 @@
         </div>
         <div class="about-container">
             <div class="about-img slide-up">
-                <img src="logo.png" alt="About Us">
+                <img src="Logo.png" alt="About Us">
             </div>
             <div class="about-content slide-up">
                 <h2>Our Story</h2>
@@ -1052,6 +1144,18 @@
     </div>
 
     <script>
+          // AI Search Bar Typing Effect
+        const aiTypingTextElement = document.getElementById('aiTypingText');
+        const aiWelcomeText = "Hi I'am SINHA AI Assistant\" How Can I Help You Today";
+        let k = 0;
+
+        function typeAiText() {
+            if (k < aiWelcomeText.length) {
+                aiTypingTextElement.innerHTML += aiWelcomeText.charAt(k);
+                k++;
+                setTimeout(typeAiText, 50); // Typing speed
+            }
+        }
         // Welcome Popup Typing Effect
         const typingSubtitle = document.getElementById('typingSubtitle');
         const welcomeText = "Try The Latest Features Powered by Artificial Intelligence";
@@ -1094,7 +1198,21 @@
                 
                 // Start typing effects after page loads
                 typeMessage();
+                 typeAiText(); // Start AI bar typing
             }, 1500);
+        });
+          // Get Started Button Scroll
+        const aiGetStartedButton = document.getElementById('aiGetStartedButton');
+
+        aiGetStartedButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default anchor link behavior
+            const targetId = aiGetStartedButton.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
 
         // Signup Button Click Event
