@@ -50,7 +50,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('bai.gif') no-repeat center center/cover;
+            background: url('BGI.gif') no-repeat center center/cover;
             filter: brightness(0.4);
             z-index: -2;
         }
@@ -73,11 +73,6 @@
             );
             animation: gradientMove 20s linear infinite;
             z-index: -1;
-        }
-
-        @keyframes gradientMove {
-            0% { transform: chatbot(0deg); }
-            100% { transform: gradient(360deg); }
         }
 
         /* Welcome Popup */
@@ -358,6 +353,19 @@
             pointer-events: none;
         }
 
+        .btn-locked {
+            background: rgba(128, 128, 128, 0.3);
+            color: #888;
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-locked:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
         /* Hero Section */
         .hero {
             display: flex;
@@ -400,9 +408,14 @@
             margin-bottom: 50px;
             text-align: center;
             position: relative;
-            display: inline-block;
+            /* Centering using inline-block and transform (can be tricky) */
+            /* display: inline-block;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%); */
+            display: block; /* Make it a block element */
+            width: fit-content; /* Set width based on content */
+            margin-left: auto; /* Center the block */
+            margin-right: auto; /* Center the block */
         }
 
         .section-title::after {
@@ -687,45 +700,190 @@
             color: white;
             text-decoration: underline;
         }
-           /* AI Search Bar in Header */
+
+        /* API Dashboard Popup */
+        .api-dashboard-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .api-dashboard-popup.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .api-dashboard-container {
+            background: var(--dark-bg);
+            border-radius: 20px;
+            width: 95%;
+            max-width: 1000px;
+            height: 90vh;
+            max-height: 700px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .api-sidebar {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .api-main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .api-dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .api-dashboard-title {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .close-api-dashboard {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-api-dashboard:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            text-align: left;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .api-form-section {
+            margin-bottom: 30px;
+        }
+
+        .api-form-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .api-key-display {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            word-break: break-all;
+        }
+
+        .api-info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .api-info-label {
+            font-size: 0.8rem;
+            color: rgba(240, 240, 240, 0.6);
+            margin-bottom: 5px;
+        }
+
+        .api-info-value {
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        .warning-message {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #ffc107;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* AI Search Bar in Header */
         .ai-search-bar {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.1); /* Similar to form inputs */
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px; /* Rounded corners */
+            border-radius: 30px;
             padding: 20px 15px;
             gap: 10px;
-            flex-grow: 1; /* Allow it to take available space */
-            max-width: 700px; /* Limit max width */
-            margin: 0 auto; /* Center it if it doesn't take full width */
+            flex-grow: 1;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .ai-icon {
-            color: white; /* Use accent color for icon */
+            color: white;
             font-size: 2rem;
         }
 
         .simulated-input {
-            flex-grow: 1; /* Allow text area to take space */
-            color: rgb(0, 110, 255);
+            flex-grow: 1;
+            color: rgb(170, 228, 255);
             font-size: 1.2rem;
-            white-space: nowrap; /* Prevent text wrapping */
-            overflow: hidden; /* Hide overflow during typing */
+            white-space: nowrap;
+            overflow: hidden;
             position: relative;
-            height: 1.2em; /* Give it a fixed height */
+            height: 1.2em;
         }
 
         #aiTypingText {
             display: inline-block;
-           /* Simulate typing effect */
-            /* You can adjust the duration and steps for different typing speeds */
         }
 
-        .ai-search-bar .btn { /* Style the button within the bar */
-            padding: 8px 20px; /* Adjust padding */
-            font-size: 1rem; /* Adjust font size */
-            flex-shrink: 0; /* Prevent button from shrinking */
+        .ai-search-bar .btn {
+            padding: 8px 20px;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         /* Scroll To Top Button */
@@ -764,7 +922,8 @@
             font-size: 1.2rem;
             color: white;
         }
-          /* About Section */
+
+        /* About Section */
         .about-container {
             display: flex;
             align-items: center;
@@ -816,6 +975,121 @@
             transition: all 0.3s ease;
         }
 
+                /* Pricing Section Styles */
+        .pricing-section {
+            padding: 60px 20px; /* py-20 වගේ padding එකක් */
+            text-align: center;
+        }
+
+        .pricing-container {
+            max-width: 1100px; /* max-w-7xl වගේ පළලක් */
+            margin: 0 auto;
+            padding: 0 15px; /* px-4 sm:px-6 lg:px-8 වගේ padding එකක් */
+        }
+
+        .pricing-main-title {
+            font-size: 2.5rem; /* text-3xl වගේ */
+            font-weight: 700; /* font-extrabold වගේ */
+            color: var(--primary-color); /* text-purple-400 වෙනුවට primary color එක */
+            margin-bottom: 50px; /* mb-12 වගේ */
+            /* section-title class එකේ තියෙන after element එකත් එක්ක conflict වෙන්න පුළුවන් නිසා,
+               අවශ්‍ය නම් section-title class එක මේ h2 එකෙන් අයින් කරන්න, නැත්නම් after element එක adjust කරන්න.
+               දැනට section-title class එක තියලා බලමු. */
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* grid-cols-1 md:grid-cols-3 වගේ responsive grid එකක් */
+            gap: 30px; /* gap-8 වගේ */
+            max-width: 900px; /* max-w-5xl වගේ */
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--blur-bg); /* card වගේ background එකක් */
+            border-radius: 15px; /* rounded-lg වගේ */
+            padding: 30px 25px; /* p-8 වගේ */
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* border border-purple-700 වගේ */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pricing-card-pro { /* Pro card එකට විශේෂ style එකක් */
+            border: 2px solid var(--primary-color); /* border-2 border-purple-500 වගේ */
+            transform: scale(1.05); /* ටිකක් ලොකුවට පේන්න */
+        }
+        .pricing-card-pro:hover {
+            transform: scale(1.08) translateY(-8px);
+        }
+
+
+        .pricing-card-title {
+            font-size: 1.5rem; /* text-xl වගේ */
+            font-weight: 600; /* font-semibold වගේ */
+            color: var(--primary-color); /* text-purple-400 වගේ */
+            margin-bottom: 15px; /* mb-4 වගේ */
+        }
+
+        .pricing-card-description {
+            color: rgba(240, 240, 240, 0.75); /* text-purple-200 වගේ */
+            margin-bottom: 25px; /* mb-6 වගේ */
+            flex-grow: 1; /* flex-grow */
+            line-height: 1.6;
+        }
+
+        .pricing-card-price {
+            font-size: 2.8rem; /* text-4xl වගේ */
+            font-weight: 700; /* font-extrabold වගේ */
+            color: var(--accent-color); /* text-purple-400 වගේ */
+            margin-bottom: 25px; /* mb-6 වගේ */
+        }
+
+        .pricing-card-interval {
+            font-size: 1rem; /* text-lg font-normal වගේ */
+            font-weight: 400;
+            color: rgba(240, 240, 240, 0.7);
+        }
+
+        .pricing-card-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px; /* mb-8 වගේ */
+            text-align: left; /* text-left */
+        }
+
+        .pricing-card-features li {
+            margin-bottom: 12px; /* space-y-3 වගේ */
+            color: rgba(240, 240, 240, 0.8);
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-feature-icon {
+            color: var(--accent-color); /* text-purple-400 වගේ */
+            margin-right: 10px; /* mr-2 වගේ */
+            font-size: 0.9em;
+        }
+
+        .pricing-card-button {
+            margin-top: auto; /* mt-auto */
+            font-weight: 600; /* font-semibold */
+            width: 100%;
+            /* btn-animated class එක ඔයාගේ CSS එකේ define කරලා නැත්නම්,
+               ඒ වෙනුවට ඔයාගේ .btn class එකේ තියෙන hover effects පාවිච්චි වෙයි.
+               නැත්නම් btn-animated class එකට අදාල styles එකතු කරන්න.
+               දැනට මම ඔයාගේ .btn සහ .btn-secondary/.btn-primary class පාවිච්චි කරනවා. */
+        }
+
+
         /* Footer */
         footer {
             text-align: center;
@@ -825,7 +1099,8 @@
             font-size: 0.9rem;
             color: rgba(240, 240, 240, 0.6);
         }
-          .footer-links {
+
+        .footer-links {
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -843,30 +1118,107 @@
             transform: translateY(-5px);
         }
 
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
+                word-break: break-word;
             }
-            
+
+            .hero-content {
+                width: 100%;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                word-break: break-word;
+            }
+
             .hero-buttons {
                 flex-direction: column;
                 gap: 15px;
             }
-            
-            .header {
+
+            header {
                 flex-direction: column;
+                align-items: center;
                 gap: 20px;
             }
-            
+
+            .hero-buttons .btn {
+                width: 90%;
+                max-width: 320px;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 0.9rem;
+            }
+
+            .logo-title {
+                font-size: 1.7rem;
+            }
+
             .header-buttons {
                 width: 100%;
                 justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
             }
-            
+
+            .header-buttons .btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .ai-search-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 15px;
+                gap: 10px;
+                margin-top: 30px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .ai-search-bar .ai-icon {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .ai-search-bar .simulated-input {
+                font-size: 1rem;
+                white-space: normal;
+                height: auto;
+                text-align: center;
+                line-height: 1.4;
+            }
+
+            .ai-search-bar .btn {
+                width: 100%;
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
             .tools-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .api-dashboard-container {
+                flex-direction: column;
+                height: 95vh;
+            }
+
+            .api-sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .sidebar-button {
+                display: inline-block;
+                width: auto;
+                margin-right: 10px;
+                margin-bottom: 10px;
             }
         }
 
@@ -874,17 +1226,61 @@
             .welcome-card {
                 padding: 30px 20px;
             }
-            
+
+            .hero-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
             .welcome-title {
                 font-size: 2.5rem;
             }
-            
+
             .hero-title {
                 font-size: 2rem;
             }
-            
+
+            .hero-description {
+                font-size: 0.9rem;
+            }
+
             .section-title {
                 font-size: 2rem;
+            }
+
+            .logo-title {
+                font-size: 1.4rem;
+            }
+
+            .header-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header-buttons .btn {
+                width: 80%;
+                max-width: 250px;
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 260px;
+                font-size: 0.85rem;
+            }
+
+            .ai-search-bar {
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .ai-search-bar .ai-icon {
+                font-size: 1.4rem;
+            }
+
+            .ai-search-bar .simulated-input {
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -912,7 +1308,7 @@
     <!-- Verification Popup -->
     <div class="verification-popup" id="verificationPopup">
         <div class="verification-card">
-             <img src="verify.png" alt="SINHA AI Logo" class="logo">
+            <img src="verify.png" alt="SINHA AI Logo" class="logo">
             <h3 class="verification-title">Enter Your Verification Code</h3>
             <p class="verification-description">Please enter the code below to verify your account:</p>
             <div class="verification-code">Eg: 5XXXJGS</div>
@@ -925,6 +1321,128 @@
         </div>
     </div>
 
+    <!-- API Dashboard Popup -->
+    <div class="api-dashboard-popup" id="apiDashboardPopup">
+        <div class="api-dashboard-container">
+            <div class="api-sidebar">
+                <div class="api-dashboard-header">
+                    <h2 class="api-dashboard-title">API Dashboard</h2>
+                    <button class="close-api-dashboard" id="closeApiDashboard">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <button class="btn btn-primary sidebar-button" id="createApiKeyBtn">
+                    <i class="fas fa-key"></i> Create API Key
+                </button>
+                <button class="btn btn-secondary sidebar-button" id="manageApiBtn" style="display: none;">
+                    <i class="fas fa-cog"></i> Manage API
+                </button>
+                <button class="btn btn-secondary sidebar-button" id="codeStoreBtn">
+                    <i class="fas fa-code"></i> Get to Code Store
+                </button>
+            </div>
+            <div class="api-main-content" id="apiMainContent">
+                <div id="welcomeApiView">
+                    <h2 class="api-form-title">Welcome to API Dashboard</h2>
+                    <p style="color: rgba(240, 240, 240, 0.8); line-height: 1.6;">
+                        Create your API key to access SINHA AI services programmatically. 
+                        Choose from our available services and generate your personalized API key.
+                    </p>
+                </div>
+                
+                <div id="createApiView" style="display: none;">
+                    <div class="warning-message" id="registrationWarning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Please register and verify your account first to create an API key.
+                    </div>
+                    
+                    <div id="apiCreationForm" style="display: none;">
+                        <h2 class="api-form-title">Create New API Key</h2>
+                        <form id="apiKeyForm">
+                            <div class="form-group">
+                                <label for="apiUsername" class="form-label">Username</label>
+                                <input type="text" id="apiUsername" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apiService" class="form-label">Select Service</label>
+                                <select id="apiService" class="form-input" required>
+                                    <option value="">Choose a service...</option>
+                                    <option value="chat-ai">Chat AI</option>
+                                    <option value="design">Design</option>
+                                    <option value="code-ai">Code AI</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="apiDescription" class="form-label">Description (Optional)</label>
+                                <textarea id="apiDescription" class="form-input form-textarea" placeholder="Describe how you'll use this API key..."></textarea>
+                            </div>
+                            <div class="form-submit">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-key"></i> Generate API Key
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="apiKeyDisplayView" style="display: none;">
+                    <h2 class="api-form-title">Your API Key</h2>
+                    <div class="api-key-display" id="generatedApiKey"></div>
+                    <div class="api-info-card">
+                        <div class="api-info-label">Username</div>
+                        <div class="api-info-value" id="displayUsername"></div>
+                    </div>
+                    <div class="api-info-card">
+                        <div class="api-info-label">Service</div>
+                        <div class="api-info-value" id="displayService"></div>
+                    </div>
+                    <div class="api-info-card">
+                        <div class="api-info-label">Created</div>
+                        <div class="api-info-value" id="displayCreated"></div>
+                    </div>
+                    <div class="form-submit">
+                        <button class="btn btn-primary" id="downloadDataBtn">
+                            <i class="fas fa-download"></i> Download Data Project
+                        </button>
+                    </div>
+                </div>
+
+                <div id="manageApiView" style="display: none;">
+                    <h2 class="api-form-title">Manage API Key</h2>
+                    <div class="api-key-display" id="currentApiKey"></div>
+                    <div class="api-info-card">
+                        <div class="api-info-label">Username</div>
+                        <div class="api-info-value" id="currentUsername"></div>
+                    </div>
+                    <div class="api-info-card">
+                        <div class="api-info-label">Service</div>
+                        <div class="api-info-value" id="currentService"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUsername" class="form-label">Update Username</label>
+                        <input type="text" id="editUsername" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="editService" class="form-label">Update Service</label>
+                        <select id="editService" class="form-input">
+                            <option value="chat-ai">Chat AI</option>
+                            <option value="design">Design</option>
+                            <option value="code-ai">Code AI</option>
+                        </select>
+                    </div>
+                    <div class="form-submit" style="gap: 10px; display: flex;">
+                        <button class="btn btn-primary" id="updateApiBtn">
+                            <i class="fas fa-save"></i> Update
+                        </button>
+                        <button class="btn btn-secondary" id="deleteApiBtn" style="background: rgba(220, 53, 69, 0.8);">
+                            <i class="fas fa-trash"></i> Delete Key
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div class="container" id="mainContainer">
         <!-- Header -->
@@ -934,11 +1452,12 @@
                 <h1 class="logo-title">SINHA AI</h1>
             </div>
             <div class="header-buttons">
-                </a>
-                <a href="https://sites.google.com/view/sinha-ai/api" class="btn btn-secondary" style="margin-left: 15px;" target="_blank">
+                <button class="btn btn-secondary" id="apiCodesButton">
                     <i class="fas fa-code"></i> API AND CODES
-                </a>
-                <button class="btn btn-secondary" id="signupButton">Sign Up</button>
+                </button>
+                <button class="btn btn-secondary" id="signupButton">
+                    <i class="fa-solid fa-user-plus"></i> Sign Up
+                </button>
                 <button class="btn btn-secondary" id="registeredButton" style="display: none;">
                     <i class="fas fa-check-circle"></i> Registered
                 </button>
@@ -958,16 +1477,16 @@
                         <i class="fas fa-magic"></i> Try AI Powered Tools
                     </a>
                 </div>
-                  <!-- New AI Search Bar -->
-            <div class="ai-search-bar">
-                 <i class="fas fa-brain ai-icon"></i>  <!-- AI Model Icon -->
-                <div class="simulated-input">
-                    <span id="aiTypingText"></span> <!-- Typing text goes here -->
+                <!-- New AI Search Bar -->
+                <div class="ai-search-bar">
+                    <i class="fas fa-brain ai-icon"></i>
+                    <div class="simulated-input">
+                        <span id="aiTypingText"></span>
+                    </div>
+                    <a href="#aiTools" class="btn btn-primary" id="aiGetStartedButton">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Get Started
+                    </a>
                 </div>
-                <a href="#aiTools" class="btn btn-primary" id="aiGetStartedButton">
-                   <i class="fa-solid fa-wand-magic-sparkles"></i> Get Started
-                </a>
-            </div>
             </div>
         </section>
 
@@ -1015,7 +1534,7 @@
                     </div>
                 </div>
 
-                 <!-- Data-Training-App -->
+                <!-- Data-Training-App -->
                 <div class="tool-card">
                     <img src="vb.jpg" alt="JGS Live Code Editor" class="tool-image">
                     <div class="tool-content">
@@ -1025,7 +1544,7 @@
                     </div>
                 </div>
 
-                 <!-- JGS Code Run Plus 2025 Update-->
+                <!-- JGS Code Run Plus 2025 Update-->
                 <div class="tool-card">
                     <img src="1.png" alt="JGS Live Code Editor" class="tool-image">
                     <div class="tool-content">
@@ -1035,7 +1554,7 @@
                     </div>
                 </div>
 
-                 <!-- JGS Text Analyzer Pro+ 2025 Update-->
+                <!-- JGS Text Analyzer Pro+ 2025 Update-->
                 <div class="tool-card">
                     <img src="6.png" alt="JGS Live Code Editor" class="tool-image">
                     <div class="tool-content">
@@ -1045,7 +1564,7 @@
                     </div>
                 </div>
 
-                 <!-- JGS Advanced Image Watermarking App Update-->
+                <!-- JGS Advanced Image Watermarking App Update-->
                 <div class="tool-card">
                     <img src="7.png" alt="JGS Live Code Editor" class="tool-image">
                     <div class="tool-content">
@@ -1065,6 +1584,125 @@
                 </a>
             </div>
         </section>
+
+          <section class="pricing-section" id="pricing">
+    <div class="pricing-container">
+     <h2 class="section-title pricing-main-title">
+      PRODUCT
+     </h2>
+     <div class="pricing-grid">
+      <div class="pricing-card">
+       <h3 class="pricing-card-title">
+        API
+       </h3>
+       <p class="pricing-card-description">
+        Perfect for individuals getting started with API design.
+       </p>
+       <p class="pricing-card-price">
+        FREE
+        <span class="pricing-card-interval">
+         /Standed
+        </span>
+       </p>
+       <ul class="pricing-card-features">
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Basic API Designer
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Auto-generated Docs
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Community Support
+        </li>
+       </ul>
+       <a class="btn btn-secondary pricing-card-button" href="https://sites.google.com/view/janithgraphicstudio/home" target="_blank" rel="noopener noreferrer">
+        Get Started
+       </a>
+      </div>
+      <div class="pricing-card pricing-card-pro"> <!-- Pro card එකට වෙනම class එකක් style කරන්න -->
+       <h3 class="pricing-card-title">
+        CODE STORE
+       </h3>
+       <p class="pricing-card-description">
+        For professionals and teams needing advanced features.
+       </p>
+       <p class="pricing-card-price">
+        Open source
+        <span class="pricing-card-interval">
+         Free
+        </span>
+       </p>
+       <ul class="pricing-card-features">
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         All Free features
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Full Code File
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Free Software And App
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Priority Support
+        </li>
+       </ul>
+       <a class="btn btn-primary pricing-card-button" href="https://sites.google.com/view/sinha-ai/api" target="_blank" rel="noopener noreferrer">
+        Get Started
+       </a>
+      </div>
+      <div class="pricing-card">
+       <h3 class="pricing-card-title">
+        EDUCATION
+       </h3>
+       <p class="pricing-card-description">
+ Free Education & AI Platform
+       </p>
+       <p class="pricing-card-price">
+        FREE
+       </p>
+       <ul class="pricing-card-features">
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Free Online Courses
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Free Class Platform
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         Free Software and App
+        </li>
+        <li>
+         <i class="fas fa-check pricing-feature-icon">
+         </i>
+         24/7 Support
+        </li>
+       </ul>
+       <a class="btn btn-secondary pricing-card-button" href="https://sites.google.com/view/jgssoftware/home" target="_blank" rel="noopener noreferrer">
+        Get Started
+       </a>
+      </div>
+     </div>
+    </div>
+   </section>
 
         <!-- Message Section -->
         <section class="message-section">
@@ -1092,49 +1730,49 @@
             </div>
         </section>
 
-          <!-- About Us Section -->
-    <section id="about">
-        <div class="section-title slide-up">
-            <h2>ABOUT US</h2>
-            <p>Learn more about our mission and the team behind SINHA AI</p>
-        </div>
-        <div class="about-container">
-            <div class="about-img slide-up">
-                <img src="Logo.png" alt="About Us">
+        <!-- About Us Section -->
+        <section id="about">
+            <div class="section-title slide-up">
+                <h2>ABOUT US</h2>
+                <p>Learn more about our mission and the team behind SINHA AI</p>
             </div>
-            <div class="about-content slide-up">
-                <h2>Our Story</h2>
-                <p>SINHA AI was founded in 2025 with the vision of making advanced artificial intelligence accessible to everyone. Our team of experts in machine learning, data science, and software engineering work tirelessly to create innovative solutions that solve real-world problems.</p>
-                <p>H. M. JANITHA ATHMA HERATH ( CEO )
-                    JANITH GRAPHIC STUDIO
+            <div class="about-container">
+                <div class="about-img slide-up">
+                    <img src="logo.png" alt="About Us">
+                </div>
+                <div class="about-content slide-up">
+                    <h2>Our Story</h2>
+                    <p>SINHA AI was founded in 2025 with the vision of making advanced artificial intelligence accessible to everyone. Our team of experts in machine learning, data science, and software engineering work tirelessly to create innovative solutions that solve real-world problems.</p>
+                    <p>H. M. JANITHA ATHMA HERATH ( CEO )
+                        JANITH GRAPHIC STUDIO
+                        
+                        As one of the best graphic design agencies in Sri Lanka, which has won the trust of customers for six years, we are committed to providing friendly customer service as well as efficient, quality service for you, the customer.
+                        
+                        
+                        The service you need is highly ranked in our website and you can contact us on the online contacts information.  
+                        
+                        Also, our friendly customer service department is ready to provide free solutions to your computer and technical problems.
+                        
+                        
+                        More information about our purpose and services through the website below</p>
                     
-                    As one of the best graphic design agencies in Sri Lanka, which has won the trust of customers for six years, we are committed to providing friendly customer service as well as efficient, quality service for you, the customer.
                     
-                    
-                    The service you need is highly ranked in our website and you can contact us on the online contacts information.  
-                    
-                    Also, our friendly customer service department is ready to provide free solutions to your computer and technical problems.
-                    
-                    
-                    More information about our purpose and services through the website below</p>
-                
-                
-                <div class="footer-logo">JGS LANKA EDUCATION 2025| Sri Lanka</div>
+                    <div class="footer-logo">JGS LANKA EDUCATION 2025| Sri Lanka</div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
         <!-- Footer -->
         <footer>
-             <div class="footer-links">
-            <a href="https://www.google.com/url?q=https%3A%2F%2Fweb.facebook.com%2Fjanithgraphicstudio.eblog&sa=D&sntz=1&usg=AOvVaw3p3jjzL04dtbyD7MfVzmzU"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.google.com/url?q=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjanitha-athma-herath-a7a3ba271%2F&sa=D&sntz=1&usg=AOvVaw2DD1U0Jya9ZOQS0xgFF-Mc"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.youtube.com/channel/UCihEwYPV1pACRyi0fJlboRQ"><i class="fab fa-youtube"></i></a>
-        </div>
+            <div class="footer-links">
+                <a href="https://www.google.com/url?q=https%3A%2F%2Fweb.facebook.com%2Fjanithgraphicstudio.eblog&sa=D&sntz=1&usg=AOvVaw3p3jjzL04dtbyD7MfVzmzU"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.google.com/url?q=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjanitha-athma-herath-a7a3ba271%2F&sa=D&sntz=1&usg=AOvVaw2DD1U0Jya9ZOQS0xgFF-Mc"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCihEwYPV1pACRyi0fJlboRQ"><i class="fab fa-youtube"></i></a>
+            </div>
             <p>&copy; © 2025 SINHA AI. All Rights Reserved.</p>
-             <p>&copy; Desing By : JGS LANKA CO. | H. M. Janith Athma Herath | 070 200 1859</p>
+            <p>&copy; Desing By : JGS LANKA CO. | H. M. Janith Athma Herath | 070 200 1859</p>
         </footer>
     </div>
 
@@ -1144,7 +1782,7 @@
     </div>
 
     <script>
-          // AI Search Bar Typing Effect
+        // AI Search Bar Typing Effect
         const aiTypingTextElement = document.getElementById('aiTypingText');
         const aiWelcomeText = "Hi I'am SINHA AI Assistant\" How Can I Help You Today";
         let k = 0;
@@ -1153,9 +1791,10 @@
             if (k < aiWelcomeText.length) {
                 aiTypingTextElement.innerHTML += aiWelcomeText.charAt(k);
                 k++;
-                setTimeout(typeAiText, 50); // Typing speed
+                setTimeout(typeAiText, 50);
             }
         }
+
         // Welcome Popup Typing Effect
         const typingSubtitle = document.getElementById('typingSubtitle');
         const welcomeText = "Try The Latest Features Powered by Artificial Intelligence";
@@ -1198,14 +1837,15 @@
                 
                 // Start typing effects after page loads
                 typeMessage();
-                 typeAiText(); // Start AI bar typing
+                typeAiText();
             }, 1500);
         });
-          // Get Started Button Scroll
+
+        // Get Started Button Scroll
         const aiGetStartedButton = document.getElementById('aiGetStartedButton');
 
         aiGetStartedButton.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default anchor link behavior
+            e.preventDefault();
             const targetId = aiGetStartedButton.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
@@ -1238,7 +1878,7 @@
         });
 
         verifyButton.addEventListener('click', () => {
-            if (verificationInput.value === 'UIM167658CM','UIM168558CM') {
+            if (verificationInput.value === 'UIM167658CM' || verificationInput.value === 'UIM168558CM') {
                 localStorage.setItem('sinhaAIRegistered', 'true');
                 signupButton.style.display = 'none';
                 registeredButton.style.display = 'flex';
@@ -1252,6 +1892,212 @@
             } else {
                 alert('Invalid verification code. Please try again.');
                 verificationInput.value = '';
+            }
+        });
+
+        // API Dashboard Functionality
+        const apiCodesButton = document.getElementById('apiCodesButton');
+        const apiDashboardPopup = document.getElementById('apiDashboardPopup');
+        const closeApiDashboard = document.getElementById('closeApiDashboard');
+        const createApiKeyBtn = document.getElementById('createApiKeyBtn');
+        const manageApiBtn = document.getElementById('manageApiBtn');
+        const codeStoreBtn = document.getElementById('codeStoreBtn');
+
+        // API Dashboard Views
+        const welcomeApiView = document.getElementById('welcomeApiView');
+        const createApiView = document.getElementById('createApiView');
+        const apiKeyDisplayView = document.getElementById('apiKeyDisplayView');
+        const manageApiView = document.getElementById('manageApiView');
+        const registrationWarning = document.getElementById('registrationWarning');
+        const apiCreationForm = document.getElementById('apiCreationForm');
+
+        // API Form Elements
+        const apiKeyForm = document.getElementById('apiKeyForm');
+        const downloadDataBtn = document.getElementById('downloadDataBtn');
+        const updateApiBtn = document.getElementById('updateApiBtn');
+        const deleteApiBtn = document.getElementById('deleteApiBtn');
+
+        // Generate API Key Function
+        function generateApiKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = 'sk-';
+            for (let i = 0; i < 48; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // Show API Dashboard
+        apiCodesButton.addEventListener('click', () => {
+            apiDashboardPopup.classList.add('active');
+            showView('welcome');
+        });
+
+        // Close API Dashboard
+        closeApiDashboard.addEventListener('click', () => {
+            apiDashboardPopup.classList.remove('active');
+        });
+
+        // Show different views
+        function showView(viewName) {
+            // Hide all views
+            welcomeApiView.style.display = 'none';
+            createApiView.style.display = 'none';
+            apiKeyDisplayView.style.display = 'none';
+            manageApiView.style.display = 'none';
+
+            // Show selected view
+            switch(viewName) {
+                case 'welcome':
+                    welcomeApiView.style.display = 'block';
+                    break;
+                case 'create':
+                    createApiView.style.display = 'block';
+                    checkRegistrationStatus();
+                    break;
+                case 'display':
+                    apiKeyDisplayView.style.display = 'block';
+                    break;
+                case 'manage':
+                    manageApiView.style.display = 'block';
+                    loadCurrentApiData();
+                    break;
+            }
+        }
+
+        // Check registration status
+        function checkRegistrationStatus() {
+            const isRegistered = localStorage.getItem('sinhaAIRegistered') === 'true';
+            if (isRegistered) {
+                registrationWarning.style.display = 'none';
+                apiCreationForm.style.display = 'block';
+            } else {
+                registrationWarning.style.display = 'block';
+                apiCreationForm.style.display = 'none';
+            }
+        }
+
+        // Update button states
+        function updateButtonStates() {
+            const hasApiKey = localStorage.getItem('sinhaAIApiKey');
+            if (hasApiKey) {
+                createApiKeyBtn.style.display = 'none';
+                manageApiBtn.style.display = 'block';
+            } else {
+                createApiKeyBtn.style.display = 'block';
+                manageApiBtn.style.display = 'none';
+            }
+        }
+
+        // Sidebar button events
+        createApiKeyBtn.addEventListener('click', () => {
+            showView('create');
+        });
+
+        manageApiBtn.addEventListener('click', () => {
+            showView('manage');
+        });
+
+        codeStoreBtn.addEventListener('click', () => {
+            window.open('https://www.jgs.com', '_blank');
+        });
+
+        // API Key Form Submission
+        apiKeyForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('apiUsername').value;
+            const service = document.getElementById('apiService').value;
+            const description = document.getElementById('apiDescription').value;
+            
+            const apiKey = generateApiKey();
+            const createdDate = new Date().toLocaleDateString();
+            
+            // Store API data
+            const apiData = {
+                apiKey: apiKey,
+                username: username,
+                service: service,
+                description: description,
+                created: createdDate
+            };
+            
+            localStorage.setItem('sinhaAIApiKey', JSON.stringify(apiData));
+            
+            // Display the generated API key
+            document.getElementById('generatedApiKey').textContent = apiKey;
+            document.getElementById('displayUsername').textContent = username;
+            document.getElementById('displayService').textContent = service;
+            document.getElementById('displayCreated').textContent = createdDate;
+            
+            showView('display');
+            updateButtonStates();
+            
+            // Reset form
+            apiKeyForm.reset();
+        });
+
+        // Download Data Project
+        downloadDataBtn.addEventListener('click', () => {
+            const apiData = JSON.parse(localStorage.getItem('sinhaAIApiKey'));
+            const content = `SINHA AI - API Data Project
+=============================
+
+API Key: ${apiData.apiKey}
+Username: ${apiData.username}
+Service: ${apiData.service}
+Description: ${apiData.description || 'N/A'}
+Created: ${apiData.created}
+
+Generated by SINHA AI Platform
+© 2025 JGS LANKA CO.`;
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'DataAi25jgs.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        });
+
+        // Load current API data for management
+        function loadCurrentApiData() {
+            const apiData = JSON.parse(localStorage.getItem('sinhaAIApiKey'));
+            if (apiData) {
+                document.getElementById('currentApiKey').textContent = apiData.apiKey;
+                document.getElementById('currentUsername').textContent = apiData.username;
+                document.getElementById('currentService').textContent = apiData.service;
+                document.getElementById('editUsername').value = apiData.username;
+                document.getElementById('editService').value = apiData.service;
+            }
+        }
+
+        // Update API data
+        updateApiBtn.addEventListener('click', () => {
+            const apiData = JSON.parse(localStorage.getItem('sinhaAIApiKey'));
+            const newUsername = document.getElementById('editUsername').value;
+            const newService = document.getElementById('editService').value;
+            
+            if (newUsername && newService) {
+                apiData.username = newUsername;
+                apiData.service = newService;
+                localStorage.setItem('sinhaAIApiKey', JSON.stringify(apiData));
+                
+                alert('API data updated successfully!');
+                loadCurrentApiData();
+            }
+        });
+
+        // Delete API key
+        deleteApiBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete your API key? This action cannot be undone.')) {
+                localStorage.removeItem('sinhaAIApiKey');
+                alert('API key deleted successfully!');
+                updateButtonStates();
+                showView('welcome');
             }
         });
 
@@ -1312,8 +2158,9 @@
             });
         });
 
-        // Start welcome typing effect
+        // Initialize
         typeWriter();
+        updateButtonStates();
     </script>
 </body>
 </html>
