@@ -975,6 +975,56 @@
             transition: all 0.3s ease;
         }
 
+           /* How It Works Section */
+        .how-it-works {
+            margin-bottom: 80px;
+        }
+
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .how-it-works-card {
+            background: var(--blur-bg);
+            border-radius: 15px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .how-it-works-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .how-it-works-icon {
+            font-size: 3rem;
+            color: orange;
+            margin-bottom: 20px;
+        }
+
+        .how-it-works-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .how-it-works-description {
+            font-size: 0.9rem;
+            color: rgba(240, 240, 240, 0.7);
+            line-height: 1.6;
+        }
+
                 /* Pricing Section Styles */
         .pricing-section {
             padding: 60px 20px; /* py-20 වගේ padding එකක් */
@@ -1490,6 +1540,36 @@
             </div>
         </section>
 
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2 class="section-title">Updates</h2>
+            <div class="how-it-works-grid">
+                <!-- Step 1 -->
+                <div class="how-it-works-card">
+                     <i class="fa-solid fa-headset how-it-works-icon"></i>
+                    <h3 class="how-it-works-title">AI Chat Bot Assistant</h3>
+                    <p class="how-it-works-description">
+                        Our advanced chatbot can answer your questions, provide recommendations,</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="how-it-works-card">
+                      <i class="fa-solid fa-wand-magic-sparkles how-it-works-icon"></i>
+                    <h3 class="how-it-works-title">Image to Prompt Generator</h3>
+                    <p class="how-it-works-description">
+                        Convert Image to Prompt to generate your own image, advanced AI image generation technology.
+                    </p>
+                </div>
+                <!-- Step 3 -->
+                <div class="how-it-works-card">
+                   <i class="fa-solid fa-laptop-code how-it-works-icon"></i>
+                    <h3 class="how-it-works-title">JGS Live Code Editor with AI</h3>
+                    <p class="how-it-works-description">
+                        A powerful online code editor with real-time collaboration, syntax highlighting,
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <!-- AI Tools Section -->
         <section class="ai-tools" id="aiTools">
             <h2 class="section-title">AI Tools</h2>
@@ -1524,6 +1604,16 @@
                     </div>
                 </div>
 
+                 <!-- JGS Image to Prompt Generator -->
+                <div class="tool-card">
+                    <img src="itp.PNG" alt="AI Image Generator" class="tool-image">
+                    <div class="tool-content">
+                        <h3 class="tool-name">JGS Image to Prompt Generator</h3>
+                        <p class="tool-description">Convert Image to Prompt to generate your own image, advanced AI image generation technology.</p>
+                        <a href="https://sites.google.com/view/sinha-ai/jgs-image-to-prompt-generator-25-1v" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
+                    </div>
+                </div>
+
                 <!-- JGS Live Code Editor -->
                 <div class="tool-card">
                     <img src="4.PNG" alt="JGS Live Code Editor" class="tool-image">
@@ -1536,7 +1626,7 @@
 
                 <!-- Data-Training-App -->
                 <div class="tool-card">
-                    <img src="tg.PNG" alt="JGS Live Code Editor" class="tool-image">
+                    <img src="vb.jpg" alt="JGS Live Code Editor" class="tool-image">
                     <div class="tool-content">
                         <h3 class="tool-name">JGS AI Training Data Builder 25</h3>
                         <p class="tool-description">Create and export training datasets for AI models, and AI-assisted coding features.</p>
@@ -1561,16 +1651,6 @@
                         <h3 class="tool-name">JGS Text Analyzer Pro+ 2025 Update</h3>
                         <p class="tool-description">This app allows you to find and analyze the number of lines, characters, clauses, words, summary, and important points in a paragraph or essay,</p>
                         <a href="https://sites.google.com/view/sinha-ai/text-analyzer-pro-2025" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
-                    </div>
-                </div>
-
-                <!-- JGS Advanced Image Watermarking App Update-->
-                <div class="tool-card">
-                    <img src="7.png" alt="JGS Live Code Editor" class="tool-image">
-                    <div class="tool-content">
-                        <h3 class="tool-name">JGS Image Watermarking App</h3>
-                        <p class="tool-description">This app allows you to add a watermark to a photo. A revolutionary tool that transforms the way you work with AI-powered features.</p>
-                        <a href="https://sites.google.com/view/sinha-ai/jgs-advanced-image-watermarking-app" class="btn btn-secondary tool-button" target="_blank">Try Now</a>
                     </div>
                 </div>
             </div>
