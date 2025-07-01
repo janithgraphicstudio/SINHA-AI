@@ -332,16 +332,14 @@
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="more-tools">
+           <div class="more-tools">
                 <a href="https://sites.google.com/view/sinha-ai/ai-tools" class="btn btn-primary" id="moreToolsButton" target="_blank">
                     <i class="fas fa-plus"></i> Get More AI Tools
-                </a>
-                <a href="https://sites.google.com/view/sinha-ai/api" class="btn btn-secondary" style="margin-left: 15px;" target="_blank">
-                    <i class="fas fa-code"></i> GET API AND CODES STORE
-                </a>
+                </a></div>
             </div>
-        </section>
+
 
           <section class="pricing-section" id="pricing">
     <div class="pricing-container">
@@ -461,6 +459,10 @@
      </div>
     </div>
    </section>
+     <div class="more-tools">
+                <a href="https://sites.google.com/view/sinha-ai/api" class="btn btn-secondary" style="margin-left: 15px;" target="_blank">
+                    <i class="fas fa-code"></i> GET API AND CODES STORE
+                </a></div>
 
         <!-- Message Section -->
         <section class="message-section">
@@ -538,6 +540,19 @@
     <div class="scroll-to-top" id="scrollToTop">
         <i class="fas fa-arrow-up"></i>
     </div>
+
+    <!-- SINHA AI Notification Popup -->
+<div id="sinhaAiNotification" class="sinha-ai-notification">
+    <div class="sinha-ai-popup-content">
+        <i class="fa-solid fa-brands fa-react sinha-ai-icon"></i>
+        <span class="sinha-ai-message" id="sinhaAiMessage"></span>
+        <button class="btn btn-primary sinha-ai-chat-btn" id="sinhaAiChatBtn">
+            <i class="fas fa-comments"></i> Chat Now
+        </button>
+        <button class="sinha-ai-close-btn" id="sinhaAiCloseBtn" title="Close">&times;</button>
+    </div>
+    <audio id="sinhaAiSound" src="not.wav"></audio>
+</div>
 
    <script src="script.js"></script>
 </body>

@@ -1,4 +1,4 @@
-   /* Global Styles */
+/* Global Styles */
         :root {
             --primary-color: #ff3366;
             --secondary-color: #ff7b25;
@@ -18,10 +18,11 @@
         }
 
         body {
-            background-color: #0f0f14;
+            background-color: #0e0e0e;
             color: var(--text-color);
             overflow-x: hidden;
             position: relative;
+            
         }
 
         /* Background Animation */
@@ -54,14 +55,16 @@
             left: -50%;
             width: 200%;
             height: 200%;
+            
+            backdrop-filter: blur(35px);
             background: linear-gradient(
                 45deg,
-                rgba(255, 51, 102, 0.1) 0%,
-                rgba(255, 123, 37, 0.1) 20%,
+                rgba(255, 0, 64, 0.199) 0%,
+                rgba(153, 0, 255, 0.185) 20%,
                 rgba(0, 255, 170, 0.1) 40%,
-                rgba(102, 51, 255, 0.1) 60%,
-                rgba(255, 51, 102, 0.1) 80%,
-                rgba(255, 123, 37, 0.1) 100%
+                rgba(64, 0, 255, 0.1) 60%,
+                rgba(255, 0, 64, 0.1) 80%,
+                rgba(255, 102, 0, 0.1) 100%
             );
             animation: gradientMove 20s linear infinite;
             z-index: -1;
@@ -435,14 +438,17 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
         }
 
         .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            transform: perspective(1000px) rotateY(var(--rotateY, 0deg)) rotateX(var(--rotateX, 0deg)) scale3d(1.05, 1.05, 1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
         .tool-card::before {
@@ -474,6 +480,9 @@
 
         .tool-content {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .tool-name {
@@ -491,11 +500,12 @@
 
         .tool-button {
             width: 100%;
+            margin-top: auto;
         }
 
         .more-tools {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
 
         /* Message Section */
@@ -1325,3 +1335,140 @@
                 font-size: 0.9rem;
             }
         }
+
+/* --- Advanced Feature Additions --- */
+
+/* 1. Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--primary-color), var(--secondary-color));
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(var(--secondary-color), var(--primary-color));
+}
+
+/* 2. Scroll-triggered Animations */
+.reveal {
+    position: relative;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.active {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+/* 3. Custom Cursor */
+.cursor {
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.cursor.grow {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border-color: transparent;
+}
+/* SINHA AI Notification Popup Styles */
+.sinha-ai-notification {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 9999;
+     backdrop-filter: blur(35px);
+    background: #111111a6;
+    color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    padding: 24px 32px 24px 24px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-40px);
+    transition: opacity 0.5s, transform 0.5s;
+    min-width: 320px;
+    max-width: 90vw;
+}
+.sinha-ai-notification.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+.sinha-ai-popup-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.sinha-ai-icon {
+    font-size: 2.2rem;
+    color: #ff8800;
+    animation: sinha-ai-bounce 1.2s infinite alternate;
+}
+@keyframes sinha-ai-bounce {
+    0% { transform: translateY(0);}
+    100% { transform: translateY(-8px);}
+}
+.sinha-ai-message {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: pre-line;
+}
+.sinha-ai-chat-btn {
+    margin-left: 18px;
+    font-size: 1rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    background: #ff9100;
+    color: #222;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.sinha-ai-chat-btn:hover {
+    background: #034652;
+    color: #fff;
+}
+@media (max-width: 600px) {
+    .sinha-ai-notification {
+        top: 10px;
+        right: 5px;
+        min-width: 220px;
+        padding: 14px 10px 14px 10px;
+    }
+    .sinha-ai-message {
+        font-size: 0.95rem;
+    }
+}
